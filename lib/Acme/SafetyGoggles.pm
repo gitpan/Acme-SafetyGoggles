@@ -4,11 +4,12 @@ use warnings;
 use strict;
 use Carp;
 use Filter::Simple;
-FILTER {
-  # use File::Slurp;
-  my ($pkg, $file, $line) = caller(1); # caller(0) is Filter::Simple
+use Text::Diff;
 
-  # print STDERR "caller is $pkg / $file / $line\n";
+$Carp::Internal{'Filter::Simple'}++;
+
+FILTER {
+  my ($pkg, $file, $line) = caller(1); # caller(0) is Filter::Simple
 
   if ($file eq '-e') {
     carp "Acme::SafetyGoggles cannot protect against code in an '-e' construction";
@@ -17,41 +18,34 @@ FILTER {
 
   my $vh;
   unless (open $vh, '<', $file) {
-    carp "Acme::SafetyGoggles: failed to open original source file $file! $!\n";
+    carp "Acme::SafetyGoggles: cannot read source file $file ! $!\n";
     return;
   }
-  my $original = join '',<$vh>;
+  my $original = '';
+  while (my $line = <$vh>) {
+    last if $line =~ /^__END__$/;
+    $original .= $line;
+  }
   close $vh;
 
-  open my $wh, '>', './safety0';
-  print $wh $original;
-  close $wh;
-  system qq[grep -v "use Acme::SafetyGoggles" safety0  > safety1];
-
-  open my $xh, '>', './safety0';
-  print $xh $_;
-  close $xh;
-  system qq[grep -v "use Acme::SafetyGoggles" safety0  > safety2];
-
-  my @diff = `diff safety1 safety2`;
-  if (@diff) {
-    carp "Code in $file has been source filtered!:\n", @diff, "===\n";
+  my $current = $_;
+  my $diff = Text::Diff::diff(\$original, \$current, { STYLE => 'OldStyle' } );
+  if ($diff) {
+    carp "File $file has been source filtered!\n", $diff, "===\n";
   }
-  unlink './safety0','./safety1','./safety2';
 };
 
 =head1 NAME
 
-Acme::SafetyGoggles - Protects programmer's eyes 
-from dangerous use of power tools like source filtering.
+Acme::SafetyGoggles - Protects programmer's eyes from source filtering
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
@@ -79,16 +73,13 @@ None.
 
 =head1 BUGS
 
-Relies on system tools C<grep> and C<diff>. If you don't have
-those tools, then this module will fail spectacularly.
-
-This version of C<Acme::SafetyGoggles> flags source files with
-the C<__END__> token.
-
 C<Acme::SafetyGoggles> can only (maybe) protect you from
 source filtering. It is not designed or warranted to 
 protect you from improper use of any other potentially
 dangerous or evil Perl construction.
+
+C<Acme::SafetyGoggles> does not operate on code specified by
+perl's C<-e> command line option.
 
 Please report any other bugs or feature requests to 
 C<bug-acme-safetygoggles at rt.cpan.org>, or through
@@ -132,6 +123,8 @@ L<http://search.cpan.org/dist/Acme-SafetyGoggles/>
 
 =head1 ACKNOWLEDGEMENTS
 
+Inspired by cpmments on source filtering from stackoverflow.com's Ether:
+http://stackoverflow.com/questions/2818155/#2819871
 
 =head1 LICENSE AND COPYRIGHT
 

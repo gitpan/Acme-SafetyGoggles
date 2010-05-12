@@ -1,5 +1,11 @@
 Revision history for Acme-SafetyGoggles
 
-0.01    Date/time
+0.02    2010-05-12
+	- Now a pure Perl module without system grep/diff tool dependencies.
+	- Removed File::Slurp dependency.
+	- Added Text::Diff dependency.
+        - Don't warn about implicit source filtering provided by the __END__ token.
+
+0.01    2010-05-12
         First version, released on an unsuspecting world.
 

@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                Acme-SafetyGoggles
-version:             0.01
-abstract:            Protects programmer's eyes 
+version:             0.02
+abstract:            Protects programmer's eyes from source filtering
 license:             perl
 author:              
     - Marty O'Brien <mob@cpan.org>
