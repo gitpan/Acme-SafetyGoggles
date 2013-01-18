@@ -1,6 +1,10 @@
 Revision history for Acme-SafetyGoggles
 
-0.03    2013-01-18
+0.04    2013-01-18
+	- Remove (_) prototype in _set_current function, which is incompatible
+	  with Perl v5.8.
+
+0.03    2013-01-16
 	- Rewrite to get  -MAcme::SafetyGoggles  feature to work.
 	- Add  state, diff  methods.
 	- Added unit tests

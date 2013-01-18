@@ -8,8 +8,15 @@ WriteMakefile(
     VERSION_FROM        => 'lib/Acme/SafetyGoggles.pm',
     ABSTRACT_FROM       => 'lib/Acme/SafetyGoggles.pm',
     ($ExtUtils::MakeMaker::VERSION >= 6.3002
-      ? ('LICENSE'=> 'perl')
-      : ()),
+        ? ('LICENSE'=> 'perl')
+        : ()),
+    META_MERGE          => {
+	no_index => {
+	    package => [
+		'Filter::Simple',
+	    ],
+        }
+    },
     PL_FILES            => {},
     PREREQ_PM => {
         'Test::More' => 0,

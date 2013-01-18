@@ -7,6 +7,7 @@ use Filter::Simple;
 use Text::Diff ();
 
 $Carp::Internal{'Filter::Simple'}++;
+our $VERSION = '0.04';
 
 no warnings 'unopened';
 no warnings 'redefine';
@@ -16,11 +17,10 @@ my ($state, $diff);
 sub state { $state }
 sub diff  { $diff  }
 
-sub _set_current (_) {
+sub _set_current {
   print DIAG "A::SG::_set_current => \n\n\n==========\n$_\n==========\n\n\n\n";
   our $current;
-  my $c = shift;
-  $current = $c if length($c);
+  $current = $_ if length($_);
 }
 
 
@@ -60,6 +60,7 @@ FILTER {
   # available to this module.
 
   *Filter::Simple::filter_add_ORIG = \&Filter::Simple::filter_add;
+
   *Filter::Simple::filter_add = sub ($) {
     my $code = shift;
     Filter::Simple::filter_add_ORIG(
@@ -71,7 +72,6 @@ FILTER {
 	} );
   }
 }
-
 
 sub apply_safety_goggles {
 
@@ -140,12 +140,9 @@ Acme::SafetyGoggles - Protects programmer's eyes from source filtering
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
-
-our $VERSION = '0.03';
-
 
 =head1 SYNOPSIS
 
@@ -287,11 +284,6 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
-
 =cut
-
-
-
-
 
 1; # End of Acme::SafetyGoggles
