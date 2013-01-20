@@ -1,5 +1,8 @@
 Revision history for Acme-SafetyGoggles
 
+0.05    2013-01-19
+	- Including Text::Diff dependency in Makefile.PL. No code changes.
+
 0.04    2013-01-18
 	- Remove (_) prototype in _set_current function, which is incompatible
 	  with Perl v5.8.

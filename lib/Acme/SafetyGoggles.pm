@@ -7,7 +7,7 @@ use Filter::Simple;
 use Text::Diff ();
 
 $Carp::Internal{'Filter::Simple'}++;
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 no warnings 'unopened';
 no warnings 'redefine';
@@ -140,7 +140,7 @@ Acme::SafetyGoggles - Protects programmer's eyes from source filtering
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 

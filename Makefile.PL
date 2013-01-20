@@ -22,6 +22,7 @@ WriteMakefile(
         'Test::More' => 0,
 	'Filter::Simple' => 0,
 	'Filter::Util::Call' => 0,
+	'Text::Diff' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'Acme-SafetyGoggles-*' },
