@@ -7,7 +7,7 @@ use Filter::Simple;
 use Text::Diff ();
 
 $Carp::Internal{'Filter::Simple'}++;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 no warnings 'unopened';
 no warnings 'redefine';
@@ -34,18 +34,6 @@ BEGIN {
   our @caller = caller(2);
   # caller(0) and caller(1) both refer to this BEGIN block
   print DIAG "A::SG::BEGIN => @caller[0..2]\n";
-}
-
-END {
-  print DIAG "A::SG::END\n";
-}
-
-INIT {
-  print DIAG "A::SG::INIT\n";
-}
-
-UNITCHECK {
-  print DIAG "A::SG::UNITCHECK\n";
 }
 
 FILTER {
@@ -79,7 +67,6 @@ sub apply_safety_goggles {
   our $current;
 
 print DIAG "applying safety googles\n";
-  $DB::single=1;
 
   FILTER { _set_current };
 
@@ -140,7 +127,7 @@ Acme::SafetyGoggles - Protects programmer's eyes from source filtering
 
 =head1 VERSION
 
-Version 0.05
+Version 0.06
 
 =cut
 

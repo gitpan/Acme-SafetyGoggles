@@ -14,6 +14,7 @@ WriteMakefile(
 	no_index => {
 	    package => [
 		'Filter::Simple',
+		'Filter::Util::Call',
 	    ],
         }
     },

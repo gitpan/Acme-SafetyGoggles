@@ -1,5 +1,9 @@
 Revision history for Acme-SafetyGoggles
 
+0.06	2013-01-24
+	- remove useless UNITCHECK block breaks in inhibits Perl <=v5.8.
+	- removing other useless special blocks
+
 0.05    2013-01-19
 	- Including Text::Diff dependency in Makefile.PL. No code changes.
 
